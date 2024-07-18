@@ -1,0 +1,8 @@
+node_modules
+coverage
+.DS_Store
+.npmrc
+*.tgz
+storybook-static
+__image_snapshots__
+
