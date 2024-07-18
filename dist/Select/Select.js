@@ -185,7 +185,32 @@ const renderInput = (props, id) => {
     return (react_1.default.createElement(Select_1.default, Object.assign({}, selectProps, { MenuProps: {
             transformOrigin: { vertical: 'top', horizontal: theme.direction === theme_1.ThemeDirectionType.RTL ? 'right' : 'left' },
             anchorOrigin: { vertical: 'top', horizontal: theme.direction === theme_1.ThemeDirectionType.RTL ? 'right' : 'left' },
-            PaperProps: { style: paperPropsStyle, elevation: 2 },
+            PaperProps: {
+                style: paperPropsStyle,
+                elevation: 2,
+                ref: (node) => {
+                    var _a, _b;
+                    if (node && props.fullWidth && props.id) {
+                        // Dynamically set the Paper width to match the Select input width
+                        const selectElement = (_a = document.getElementById(props.id)) === null || _a === void 0 ? void 0 : _a.parentElement;
+                        if (selectElement) {
+                            node.style.width = `${selectElement.clientWidth}px`;
+                            // Check if the select element or its parent takes up the full width of the page
+                            const isFullPage = window.innerWidth === document.body.clientWidth;
+                            window.console.log({
+                                isFullPage,
+                                innerWidth: window.innerWidth,
+                                docBodyWidth: document.body.clientWidth,
+                                selectWidth: (_b = document.getElementById(props.id)) === null || _b === void 0 ? void 0 : _b.clientWidth,
+                            });
+                            if (!isFullPage) {
+                                // Apply -8px marginLeft adjustment in fullWidth mode when the input box is not in full page
+                                node.style.marginLeft = '-8px';
+                            }
+                        }
+                    }
+                },
+            },
         } })));
 };
 const getInputLabelAndActionProps = (props) => {
